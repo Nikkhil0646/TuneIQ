@@ -1,8 +1,9 @@
 // Chromatic scale with enharmonic equivalents
 const notes: string[] = [
-  "A", "A♯/B♭", "B", "C", "C♯/D♭", "D",
-  "D♯/E♭", "E", "F", "F♯/G♭", "G", "G♯/A♭"
+  "A", "A#/Bb", "B", "C", "C#/Db", "D",
+  "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab"
 ];
+
 
 // All scale formulas
 const scaleFormulas: { [key: string]: number[] } = {

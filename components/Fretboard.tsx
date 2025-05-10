@@ -1,12 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { noteColors } from "@/constants/Colors";
 
 const stringTunings = ["E", "B", "G", "D", "A", "E"]; // Strings 1 to 6
 const totalFrets = 12;
 
-const Fretboard = ({ scaleNotes }: { scaleNotes: string[] }) => {
-  const normalizeNote = (note: string) => note.split("/")[0];
+const normalizeNote = (note: string) => note.split("/")[0];
 
+const Fretboard = ({ scaleNotes }: { scaleNotes: string[] }) => {
   const rootNote = normalizeNote(scaleNotes[0]); // Assume first note is root
 
   const matchesScaleNote = (fretNote: string) => {
@@ -18,8 +19,8 @@ const Fretboard = ({ scaleNotes }: { scaleNotes: string[] }) => {
   };
 
   const notes = [
-    "A", "A♯/B♭", "B", "C", "C♯/D♭", "D",
-    "D♯/E♭", "E", "F", "F♯/G♭", "G", "G♯/A♭"
+    "A", "A#/Bb", "B", "C", "C#/Db", "D",
+    "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab"
   ];
 
   const getNoteAtFret = (openNote: string, fret: number): string => {
@@ -49,18 +50,20 @@ const Fretboard = ({ scaleNotes }: { scaleNotes: string[] }) => {
               </View>
               {Array.from({ length: totalFrets + 1 }).map((_, fretIndex) => {
                 const note = getNoteAtFret(openNote, fretIndex);
+                const normalized = normalizeNote(note);
                 const inScale = matchesScaleNote(note);
                 const isRoot = isRootNote(note);
 
                 let bgColor = "#e0e0e0";
-                if (inScale) bgColor = isRoot ? "#FF9800" : "#4CAF50";
+                if (isRoot) bgColor = "#4CAF50"; // Root note in green
+                else if (inScale) bgColor = noteColors[normalized] || "#bdbdbd";
 
                 return (
                   <View
                     key={fretIndex}
                     style={[styles.fret, { backgroundColor: bgColor }]}
                   >
-                    <Text style={styles.noteText}>{normalizeNote(note)}</Text>
+                    <Text style={styles.noteText}>{normalized}</Text>
                   </View>
                 );
               })}
